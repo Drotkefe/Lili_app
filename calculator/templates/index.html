@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Láda Méter Számoló</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            height: 580px;
+            width: 100%;
+            margin: 10px;
+        }
+        .form-container {
+        display: flex;
+        justify-content: space-between;
+        }
+        .form-section {
+        width: 50%;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="number"]{
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="checkbox"]{
+            align-items: flex-start;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            width: 20px;
+            height: 20px;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: left;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .input-group{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .input-group input, .input-group select{
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Láda Méter Számoló by Lili csávója</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-container">
+                <div class="form-section">
+                    <h2>Kamion Raktér Méretek</h2>
+                    <label for="storage_x">Szélesség:</label>
+                    <div class="input-group">
+                        <input type="number" id="storage_x" name="storage_x" maxlength="5" step="0.1" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" value="{{ storage_x }}">
+                        <select name="unit_storage_x">
+                            <option value="m">Méter</option>
+                            <option value="cm">Centiméter</option>
+                        </select>
+                    </div>
+                    <label for="storage_y">Magasság:</label>
+                    <div class="input-group">
+                        <input type="number" id="storage_z" name="storage_z" maxlength="5" step="0.1" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" value="{{ storage_z }}">
+                        <select name="unit_storage_z">
+                            <option value="m">Méter</option>
+                            <option value="cm">Centiméter</option>
+                        </select>
+                    </div>
+                    <label for="storage_z">Hosszúság:</label>
+                    <div class="input-group">
+                        <input type="number" id="storage_y" name="storage_y" maxlength="5" step="0.1" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" value="{{ storage_y }}" required>
+                        <select name="unit_storage_y">
+                            <option value="m">Méter</option>
+                            <option value="cm">Centiméter</option>
+                        </select>
+                    </div>
+                    <img src="{% static 'calculator/rectangle.png' %}" width="240" height="180">
+                </div>
+                <div class="form-section">
+                    <h2>Áru Tulajdonságok</h2>
+                    <label for="item_width">Szélesség:</label>
+                    <div class="input-group">
+                        <input type="number" id="item_width" name="item_width" maxlength="5" step="0.1" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" value="{{ item_width }}">
+                        <select name="unit_item_width">
+                            <option value="m">Méter</option>
+                            <option value="cm">Centiméter</option>
+                        </select>
+                    </div>
+                    <label for="item_height">Magasság:</label>
+                    <div class="input-group">
+                        <input type="number" id="item_height" name="item_height" maxlength="5" step="0.1" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" value="{{ item_height }}">
+                        <select name="unit_item_height">
+                            <option value="m">Méter</option>
+                            <option value="cm">Centiméter</option>
+                        </select>
+                    </div>
+                    <label for="item_length">Hosszúság:</label>
+                    <div class="input-group">
+                        <input type="number" id="item_length" name="item_length" maxlength="5" step="0.1" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" value="{{ item_length }}">
+                        <select name="unit_item_length">
+                            <option value="m">Méter</option>
+                            <option value="cm">Centiméter</option>
+                        </select>
+                    </div>
+                    <label for="item_number">Mennyiség:</label>
+                    <input type="number" id="item_number" name="item_number" maxlength="5" pattern="[0-9]" value="{{ item_number }}">
+                    <label for="pallet">Raklap:</label>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="pallet" name="pallet" {% if pallet %} checked {% endif %}>
+                    </div>
+                    <label for="stackable">Rakatolható:</label>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="stackable" name="stackable" {% if stackable %} checked {% endif %}>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Számolj">
+        </form>
+    </div>
+</body>
+{% if result is not None %}
+        <div class="form-section">
+            <h2>Láda méter: {{ result }}</h2>
+            <h3>Kamion telítettség: {{ load_percent }}%/&#13221; </h3>
+        </div>
+{% endif %}
+</html>
