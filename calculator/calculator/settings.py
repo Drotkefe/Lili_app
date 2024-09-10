@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gfph4t5&(u4gw&7ity+-ln0#8%$qg4!ky*3#wn$_+nnk9j7-(9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lili-app.pages.dev']
 
 
 # Application definition
